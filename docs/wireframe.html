@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>공모픽 와이어프레임 v0.1</title>
+<style>
+  :root { --bg:#EEF1F6; --card:#fff; --text:#1B2330; --sub:#6B7686; --line:#E2E7EF; --primary:#2F6BFF; --soft:#E8EFFF; --ok:#12A150; --okb:#E3F6EC; --warn:#C77700; --warnb:#FFF2DB; --bad:#D83A3A; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:24px 16px 64px; background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,"Malgun Gothic",sans-serif; }
+  h1 { font-size:22px; margin:0 0 4px; } .lead { color:var(--sub); margin:0 0 24px; font-size:14px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:28px; max-width:1200px; margin:0 auto; }
+  figure { margin:0; } figcaption { font-weight:700; margin:0 0 8px 4px; font-size:14px; } figcaption small { color:var(--sub); font-weight:400; }
+  .phone { width:320px; height:640px; background:#fff; border:2px solid #CBD3E0; border-radius:28px; overflow:hidden; display:flex; flex-direction:column; margin:0 auto; box-shadow:0 6px 20px rgba(20,30,60,.08); }
+  .top { padding:14px 14px 8px; font-weight:800; font-size:16px; border-bottom:1px solid var(--line); }
+  .body { flex:1; overflow:hidden; background:var(--bg); padding:10px; display:flex; flex-direction:column; gap:8px; }
+  .tabs { display:flex; border-top:1px solid var(--line); background:#fff; }
+  .tabs div { flex:1; text-align:center; padding:8px 0 10px; font-size:10px; color:var(--sub); } .tabs div b { display:block; font-size:16px; font-weight:400; } .tabs .on { color:var(--primary); font-weight:700; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:10px 12px; font-size:12px; display:flex; flex-direction:column; gap:3px; }
+  .card strong { font-size:13px; } .sub { color:var(--sub); font-size:11px; }
+  .row { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+  .chip { border:1px solid var(--line); border-radius:999px; padding:3px 9px; font-size:11px; color:var(--sub); background:#fff; } .chip.on { background:var(--soft); border-color:var(--primary); color:var(--primary); } .chip.ok { background:var(--okb); border-color:var(--ok); color:var(--ok); }
+  .btn { background:var(--primary); color:#fff; text-align:center; border-radius:10px; padding:9px; font-size:12px; font-weight:700; } .btn.ghost { background:var(--soft); color:var(--primary); }
+  .note { background:var(--warnb); color:var(--warn); border-radius:10px; padding:7px 10px; font-size:11px; }
+  .field { border:1px solid var(--line); border-radius:8px; padding:6px 8px; font-size:11px; background:#fff; color:var(--sub); }
+  .stat { display:flex; justify-content:space-between; font-size:12px; } .stat b { font-size:13px; }
+  h4 { margin:2px 2px; font-size:12px; }
+  .legend { max-width:900px; margin:32px auto 0; background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px; font-size:13px; line-height:1.6; }
+  .legend li { margin-bottom:4px; }
+</style>
+</head>
+<body>
+<h1>공모픽 와이어프레임 v0.1</h1>
+<p class="lead">가족 4명이 쓰는 공모주 청약 관리 앱. 아래 6개 화면은 실제 앱(Expo)의 화면 구성과 같은 순서·항목으로 그렸습니다. 숫자는 예시입니다.</p>
+
+<div class="grid">
+
+<figure>
+<figcaption>① 홈 — 오늘 할 일 <small>(11/25 수, 마감 당일 예시)</small></figcaption>
+<div class="phone"><div class="top">안녕하세요, 지원님<div class="sub" style="font-weight:400">2026-11-25 · 내 자금 1,000,000원</div></div>
+<div class="body">
+  <h4>오늘 할 일</h4>
+  <div class="card"><strong>📝 가나다전자</strong><span class="sub">오늘 청약 마감 — 미청약 2개: 미래에셋증권(주계좌), KB증권(주계좌)</span></div>
+  <div class="card"><strong>↩️ 라마바테크</strong><span class="sub">환불 확인 1개: 삼성증권(주계좌)</span></div>
+  <div class="card"><strong>🔔 사아자바이오</strong><span class="sub">내일 상장 — 배정 보유 1개. 매도 후 매도가를 기록하세요</span></div>
+  <h4>진행 중인 공모주</h4>
+  <div class="card"><strong>가나다전자</strong><span class="sub">청약 마감 11/25(수) · 환불 11/27(금) · 상장 12/03(목)</span>
+    <div class="row"><span class="chip on">이체 대상 2개</span><span class="sub">필요 증거금 200,000원</span></div></div>
+</div>
+<div class="tabs"><div class="on"><b>✅</b>홈</div><div><b>📈</b>종목</div><div><b>🗓️</b>캘린더</div><div><b>💰</b>기록</div><div><b>⚙️</b>설정</div></div></div>
+</figure>
+
+<figure>
+<figcaption>② 종목 목록 <small>(예정·진행 / 지난 종목)</small></figcaption>
+<div class="phone"><div class="top">종목</div>
+<div class="body">
+  <div class="btn">＋ 공모주 추가</div>
+  <span class="sub">예정·진행 중</span>
+  <div class="card"><strong>가나다전자</strong><span class="sub">청약 11/24(화) ~ 11/25(수) · 환불 11/27(금) · 상장 12/03(목)</span><span class="sub">DART 수집 (20261105000001)</span></div>
+  <div class="card"><strong>제12호기업인수목적 · 스팩</strong><span class="sub">청약 11/27(금) ~ 11/28(토) · 환불 12/02(수) · 상장 12/09(수)</span></div>
+  <span class="sub">지난 종목</span>
+  <div class="card"><strong>라마바테크</strong><span class="sub">청약 11/18(수) ~ 11/19(목) · 환불 11/23(월) · 상장 11/27(금)</span></div>
+</div>
+<div class="tabs"><div><b>✅</b>홈</div><div class="on"><b>📈</b>종목</div><div><b>🗓️</b>캘린더</div><div><b>💰</b>기록</div><div><b>⚙️</b>설정</div></div></div>
+</figure>
+
+<figure>
+<figcaption>③ 종목 상세 — 정보 + 증거금 플래너</figcaption>
+<div class="phone"><div class="top">가나다전자</div>
+<div class="body">
+  <div class="card"><strong>종목 정보</strong>
+    <div class="field">종목명: 가나다전자</div>
+    <div class="row"><span class="chip on">일반 공모주</span><span class="chip">스팩</span></div>
+    <div class="field">확정 공모가: 20,000</div>
+    <div class="field">청약 마감: 2026-11-25</div>
+    <div class="row"><span class="chip on">미래에셋</span><span class="chip on">KB</span><span class="chip">삼성</span><span class="chip on">NH투자</span></div>
+    <div class="btn">저장</div></div>
+  <div class="card"><strong>증거금 플래너 (내 자금 1,000,000원)</strong>
+    <span class="sub">공모가 20,000원 기준</span>
+    <div class="note">라마바테크에 250,000원이 묶여 있어 사용 가능 자금은 750,000원이에요.</div>
+    <span class="sub">• KB증권(주계좌) — 100,000원</span><span class="sub">• NH투자증권(주계좌) — 100,000원</span>
+    <span class="sub">청약 후 남는 자금 550,000원</span></div>
+</div>
+<div class="tabs"><div><b>✅</b>홈</div><div class="on"><b>📈</b>종목</div><div><b>🗓️</b>캘린더</div><div><b>💰</b>기록</div><div><b>⚙️</b>설정</div></div></div>
+</figure>
+
+<figure>
+<figcaption>④ 종목 상세 — 계좌별 진행·배정·매도 <small>(스크롤 하단)</small></figcaption>
+<div class="phone"><div class="top">가나다전자</div>
+<div class="body">
+  <h4>내 계좌 진행 상태</h4>
+  <div class="card"><strong>KB증권 (주계좌)</strong>
+    <div class="row"><span class="chip ok">✓ 이체</span><span class="chip ok">✓ 청약 완료</span><span class="chip">건너뜀</span><span class="chip ok">✓ 환불 확인</span></div>
+    <div class="field">배정 수량(주): 2</div><div class="field">매도가(주당, 원): 36,000</div>
+    <div class="field">매도 수수료·세금 합계: 300</div><div class="field">메모: 환불 오후에 들어옴</div>
+    <strong>순수익 31,700원</strong></div>
+  <h4>가족 현황</h4>
+  <div class="card"><strong>민수</strong><span class="sub">청약 완료 3개 · 배정 4주</span></div>
+  <div class="card"><strong>서연</strong><span class="sub">청약 완료 2개 · 배정 2주</span></div>
+</div>
+<div class="tabs"><div><b>✅</b>홈</div><div class="on"><b>📈</b>종목</div><div><b>🗓️</b>캘린더</div><div><b>💰</b>기록</div><div><b>⚙️</b>설정</div></div></div>
+</figure>
+
+<figure>
+<figcaption>⑤ 기록 — 성공지표 3가지</figcaption>
+<div class="phone"><div class="top">기록</div>
+<div class="body">
+  <div class="row" style="justify-content:space-between"><div class="chip">◀</div><strong>2026-12</strong><div class="chip">▶</div></div>
+  <div class="card"><strong>나</strong>
+    <div class="stat"><span class="sub">월 누적 순수익</span><b>+84,300원</b></div>
+    <div class="stat"><span class="sub">자금 회전율</span><b>2.40회전</b></div>
+    <div class="stat"><span class="sub">놓친 청약</span><b>1건</b></div></div>
+  <div class="card"><strong>가족 합산 (자금 4,000,000원)</strong>
+    <div class="stat"><span class="sub">월 누적 순수익</span><b>+312,500원</b></div>
+    <div class="stat"><span class="sub">자금 회전율</span><b>2.10회전</b></div>
+    <div class="stat"><span class="sub">놓친 청약</span><b>3건</b></div></div>
+  <h4>가족별</h4>
+  <div class="card"><strong>민수</strong><span class="sub">순수익 +102,000원 · 회전 2.8 · 놓침 0건</span></div>
+</div>
+<div class="tabs"><div><b>✅</b>홈</div><div><b>📈</b>종목</div><div><b>🗓️</b>캘린더</div><div class="on"><b>💰</b>기록</div><div><b>⚙️</b>설정</div></div></div>
+</figure>
+
+<figure>
+<figcaption>⑥ 설정 — 계좌·가족·증권사</figcaption>
+<div class="phone"><div class="top">설정</div>
+<div class="body">
+  <div class="card"><strong>내 자금</strong><div class="field">증거금 운용 자금(원): 1,000,000</div></div>
+  <div class="card"><strong>내 계좌</strong><span class="sub">계좌번호·비밀번호·잔고는 저장하지 않아요.</span>
+    <div class="row" style="justify-content:space-between"><span>KB증권 (주계좌)</span><span class="chip">삭제</span></div>
+    <div class="row" style="justify-content:space-between"><span>미래에셋증권 (주계좌)</span><span class="chip">삭제</span></div></div>
+  <div class="card"><strong>가족 (3/4)</strong>
+    <span class="sub">jiwon@gmail.com · 관리자</span><span class="sub">minsu@gmail.com</span><span class="sub">seoyeon@gmail.com</span>
+    <div class="field">가족 Google 이메일 추가</div></div>
+  <div class="card"><strong>증권사 설정</strong><span class="sub">최소 10주 · 증거금률 50% · 수수료 2,000원 [수정]</span></div>
+</div>
+<div class="tabs"><div><b>✅</b>홈</div><div><b>📈</b>종목</div><div><b>🗓️</b>캘린더</div><div><b>💰</b>기록</div><div class="on"><b>⚙️</b>설정</div></div></div>
+</figure>
+
+</div>
+
+<div class="legend">
+  <b>화면 흐름과 규칙</b>
+  <ul>
+    <li><b>홈</b>은 "오늘 뭘 해야 하는지"만 보여 줍니다. 카드를 누르면 해당 종목 상세로 이동합니다.</li>
+    <li><b>종목 상세</b>에서 가족 누구나 종목 정보를 보정할 수 있고(수정자 표시), 청약·배정·매도 기록은 본인 계좌만 수정할 수 있습니다.</li>
+    <li><b>증거금 플래너</b>는 [청약 마감일, 환불일) 구간에 묶인 다른 종목의 증거금을 차감한 뒤, 내 자금 안에서 이체할 계좌를 수수료가 낮은 순으로 추천합니다.</li>
+    <li><b>캘린더</b>는 앞으로 60일의 청약 시작·마감·환불·상장 일정을 날짜별로 나열하는 아젠다 형식입니다(와이어프레임 생략).</li>
+    <li><b>로그인</b>은 Google 계정. 관리자가 등록한 가족 이메일만 같은 그룹에 합류합니다(와이어프레임 생략).</li>
+  </ul>
+</div>
+</body>
+</html>

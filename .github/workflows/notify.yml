@@ -1,0 +1,54 @@
+name: 카카오톡 알림
+# cron 은 UTC 기준. KST = UTC+9
+#   00:00 UTC = 09:00 KST  (청약 마감 당일·환불일·배정 입력)
+#   09:00 UTC = 18:00 KST  (내일 마감 종목 증거금 이체, 내일 상장)
+#   23:30 UTC = 08:30 KST  (상장일)
+# GitHub 스케줄은 수 분~수십 분 지연될 수 있어요. 저장소에 60일간 활동이 없으면 스케줄이 자동 중지됩니다.
+on:
+  schedule:
+    - cron: '0 0 * * *'
+    - cron: '0 9 * * *'
+    - cron: '30 23 * * *'
+  workflow_dispatch:
+    inputs:
+      slot:
+        description: '발송 슬롯'
+        type: choice
+        options: [morning, evening, listing]
+        default: morning
+      dry_run:
+        description: '실제로 보내지 않고 로그만'
+        type: boolean
+        default: true
+concurrency:
+  group: notify
+  cancel-in-progress: false
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: 슬롯 결정
+        id: slot
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "slot=${{ inputs.slot }}" >> "$GITHUB_OUTPUT"
+          else
+            case "${{ github.event.schedule }}" in
+              '0 0 * * *')   echo "slot=morning" >> "$GITHUB_OUTPUT" ;;
+              '0 9 * * *')   echo "slot=evening" >> "$GITHUB_OUTPUT" ;;
+              '30 23 * * *') echo "slot=listing" >> "$GITHUB_OUTPUT" ;;
+            esac
+          fi
+      - name: 알림 발송
+        run: npx tsx scripts/notify.ts --slot "${{ steps.slot.outputs.slot }}" ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) && '--dry-run' || '' }}
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+          APP_URL: ${{ vars.APP_URL }}
